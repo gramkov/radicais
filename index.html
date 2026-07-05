@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Radicais Chineses (214 Kangxi) - Premium</title>
+    <style>
+        /* Variáveis de Design Modernas */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --accent-color: #6366f1;
+            --border-color: #e2e8f0;
+            --hover-color: #f8fafc;
+            --shadow-hover: rgba(0, 0, 0, 0.04);
+            
+            /* Cores dos Status */
+            --status-estudo-bg: #fef9c3;    
+            --status-estudo-hover: #fde047;
+            --status-aprendido-bg: #dcfce7;  
+            --status-aprendido-hover: #86efac;
+        }
+
+        /* Variáveis para o Modo Escuro */
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #818cf8;
+            --border-color: #334155;
+            --hover-color: #1e293b;
+            --shadow-hover: rgba(0, 0, 0, 0.3);
+
+            /* Cores dos Status adaptadas para o Modo Escuro */
+            --status-estudo-bg: #423810;    
+            --status-estudo-hover: #ca8a04;
+            --status-aprendido-bg: #14532d;  
+            --status-aprendido-hover: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        /* Botão Tema */
+        .btn-theme {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px 18px;
+            border-radius: 14px; /* Mais arredondado */
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-theme:hover {
+            background-color: var(--border-color);
+        }
+
+        header {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 30px;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 35px 20px;
+            border-radius: 20px; /* Arredondamento moderno */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--text-color);
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 35px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 18px 26px;
+            font-size: 16px;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px; /* Arredondamento moderno */
+            outline: none;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+        }
+
+        #search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        }
+
+        /* Títulos dos Blocos de Traços */
+        .block-title {
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px 0 15px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .block-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        /* Container do Bloco/Tabela */
+        .table-container {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--card-bg);
+            border-radius: 20px; /* Arredondamento moderno */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: var(--bg-color);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Cor da linha quando marcada (ex: amarelo) */
+.linha-marcada {
+    background-color: #f1c40f !important; /* Caso já esteja usando important */
+}
+
+/* Força a cor a continuar amarela mesmo com o mouse em cima */
+.linha-marcada:hover {
+    background-color: #f1c40f; /* Ou um tom sutilmente diferente para o hover */
+}
+
+        /* Efeito Hover com Sombrinha Premium e Sutil */
+        tr {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: var(--hover-color) !important;
+            box-shadow: inset 4px 0 0 var(--accent-color), 0 4px 12px var(--shadow-hover);
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Manutenção das Classes de Status */
+        tr.status-estudo {
+            background-color: var(--status-estudo-bg) !important;
+        }
+        tr.status-aprendido {
+            background-color: var(--status-aprendido-bg) !important;
+        }
+
+        .col-num {
+            width: 70px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .col-char {
+            font-size: 34px;
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SimSun", serif;
+            color: var(--text-color);
+            font-weight: 700;
+            width: 100px;
+        }
+
+        .col-vars {
+            font-size: 18px;
+            color: var(--accent-color);
+            width: 130px;
+            font-weight: 600;
+        }
+
+        .col-meaning {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .col-status {
+            width: 160px;
+            text-align: center;
+        }
+
+        .col-gif {
+            width: 110px;
+            text-align: center;
+        }
+
+        .badge {
+            background: var(--bg-color);
+            padding: 6px 12px;
+            border-radius: 10px; /* Arredondamento moderno */
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .trad-highlight {
+            background-color: rgba(249, 115, 22, 0.15);
+            color: #f97316;
+            padding: 4px 10px;
+            border-radius: 8px; /* Arredondamento moderno */
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 6px;
+            border: 1px solid rgba(249, 115, 22, 0.2);
+        }
+
+        /* Botão Interativo de Status */
+        .btn-status {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 12px; /* Arredondamento moderno */
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            outline: none;
+        }
+
+        .btn-status:hover {
+            border-color: var(--text-secondary);
+        }
+
+        .btn-status.estudo {
+            background-color: var(--status-estudo-hover);
+            border-color: #ca8a04;
+            color: #451a03;
+        }
+
+        .btn-status.aprendido {
+            background-color: var(--status-aprendido-hover);
+            border-color: #16a34a;
+            color: #022c22;
+        }
+
+        /* Container do GIF */
+        .gif-wrapper {
+            width: 72px;
+            height: 72px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px; /* Arredondamento moderno */
+            background: #ffffff;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        [data-theme="dark"] .gif-wrapper {
+            background: #f8fafc; /* Garante fundo claro para o GIF escuro do Wikimedia */
+        }
+
+        .stroke-gif {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #empty-message {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span> Modificar Tema
+        </button>
+    </div>
+
+    <header>
+        <h1>Tabela Interativa de Radicais Chineses</h1>
+        <p>Agrupados por quantidade de traços, com suporte a modo escuro persistente e animação de escrita</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Busque por número, caractere ou significado... (Ex: '2', '水', 'fogo')">
+    </div>
+
+    <!-- Div principal onde as tabelas separadas por blocos nascerão dinamicamente -->
+    <div id="dynamic-blocks-container" style="width: 100%; max-width: 1200px;"></div>
+    
+    <div id="empty-message">Nenhum radical corresponde aos critérios de pesquisa.</div>
+
+    <script>
+        // Dados originais completos preservados exatamente como estavam
+        const radicals = [
+            // 1 Traço
+            { id: 1, char: "一", vars: "-", strokes: 1, meaning: "Um (yī)" },
+            { id: 2, char: "丨", vars: "-", strokes: 1, meaning: "Linha vertical" },
+            { id: 3, char: "丶", vars: "-", strokes: 1, meaning: "Ponto" },
+            { id: 4, char: "丿", vars: "-", strokes: 1, meaning: "Traço esquerdo (curva)" },
+            { id: 5, char: "乙", vars: "乚, 乛", strokes: 1, meaning: "Segundo / Borda (yǐ)" },
+            { id: 6, char: "亅", vars: "-", strokes: 1, meaning: "Gancho" },
+            // 2 Traços
+            { id: 7, char: "二", vars: "-", strokes: 2, meaning: "Dois (èr)" },
+            { id: 8, char: "亠", vars: "-", strokes: 2, meaning: "Tampa alta" },
+            { id: 9, char: "人", vars: "亻", strokes: 2, meaning: "Pessoa (rén)" },
+            { id: 10, char: "儿", vars: "-", strokes: 2, meaning: "Filho / Pernas (ér)" },
+            { id: 11, char: "入", vars: "-", strokes: 2, meaning: "Entrar (rù) - [Substituído por 人 no simplificado]" },
+            { id: 12, char: "八", vars: "丷", strokes: 2, meaning: "Oito, dividir (bā)" },
+            { id: 13, char: "冂", vars: "-", strokes: 2, meaning: "Caixa aberta por baixo" },
+            { id: 14, char: "冖", vars: "-", strokes: 2, meaning: "Cobertura / Tampa caída" },
+            { id: 15, char: "冫", vars: "-", strokes: 2, meaning: "Gelo (Duas gotas)" },
+            { id: 16, char: "几", vars: "-", strokes: 2, meaning: "Mesa pequena (jǐ)" },
+            { id: 17, char: "凵", vars: "-", strokes: 2, meaning: "Recipiente / Caixa aberta por cima" },
+            { id: 18, char: "刀", vars: "刂", strokes: 2, meaning: "Faca, lâmina (dāo)" },
+            { id: 19, char: "力", vars: "-", strokes: 2, meaning: "Força (lì)" },
+            { id: 20, char: "勹", vars: "-", strokes: 2, meaning: "Abraço / Embrulho" },
+            { id: 21, char: "匕", vars: "-", strokes: 2, meaning: "Colher / Adaga (bǐ)" },
+            { id: 22, char: "匚", vars: "-", strokes: 2, meaning: "Caixa aberta pela direita" },
+            { id: 23, char: "匸", vars: "-", strokes: 2, meaning: "Esconderijo [Fundiu-se com o 匚 no simplificado]" },
+            { id: 24, char: "十", vars: "-", strokes: 2, meaning: "Dez (shí)" },
+            { id: 25, char: "卜", vars: "-", strokes: 2, meaning: "Adivinhação (bǔ)" },
+            { id: 26, char: "卩", vars: "⺋", strokes: 2, meaning: "Selo / Pessoa ajoelhada" },
+            { id: 27, char: "厂", vars: "-", strokes: 2, meaning: "Penhasco / Fábrica (chǎng)" },
+            { id: 28, char: "厶", vars: "-", strokes: 2, meaning: "Privado / Egoísta" },
+            { id: 29, char: "又", vars: "-", strokes: 2, meaning: "Novamente / Mão direita (yòu)" },
+            // 3 Traços
+            { id: 30, char: "口", vars: "-", strokes: 3, meaning: "Boca (kǒu)" },
+            { id: 31, char: "囗", vars: "-", strokes: 3, meaning: "Cerca / Envoltório completo" },
+            { id: 32, char: "土", vars: "-", strokes: 3, meaning: "Terra (tǔ)" },
+            { id: 33, char: "士", vars: "-", strokes: 3, meaning: "Erudito / Guerreiro (shì)" },
+            { id: 34, char: "夂", vars: "-", strokes: 3, meaning: "Seguir / Ir atrás" },
+            { id: 35, char: "夊", vars: "-", strokes: 3, meaning: "Caminhar lentamente [Fundiu-se visualmente com 夂]" },
+            { id: 36, char: "夕", vars: "-", strokes: 3, meaning: "Noite / Entardecer (xī)" },
+            { id: 37, char: "大", vars: "-", strokes: 3, meaning: "Grande (dà)" },
+            { id: 38, char: "女", vars: "-", strokes: 3, meaning: "Mulher (nǚ)" },
+            { id: 39, char: "子", vars: "-", strokes: 3, meaning: "Filho / Criança (zǐ)" },
+            { id: 40, char: "宀", vars: "-", strokes: 3, meaning: "Teto / Casa" },
+            { id: 41, char: "寸", vars: "-", strokes: 3, meaning: "Polegada (cùn)" },
+            { id: 42, char: "小", vars: "⺌", strokes: 3, meaning: "Pequeno (xiǎo)" },
+            { id: 43, char: "尢", vars: "分", strokes: 3, meaning: "Coxo" },
+            { id: 44, char: "尸", vars: "-", strokes: 3, meaning: "Cadáver / Corpo (shī)" },
+            { id: 45, char: "屮", vars: "-", strokes: 3, meaning: "Broto" },
+            { id: 46, char: "山", vars: "-", strokes: 3, meaning: "Montanha (shān)" },
+            { id: 47, char: "工", vars: "-", strokes: 3, meaning: "Trabalho / Engenharia (gōng)" },
+            { id: 48, char: "己", vars: "-", strokes: 3, meaning: "Próprio / Si mesmo (jǐ)" },
+            { id: 49, char: "巾", vars: "-", strokes: 3, meaning: "Lenço / Toalha (jīn)" },
+            { id: 50, char: "干", vars: "-", strokes: 3, meaning: "Seco / Escudo (gān)" },
+            { id: 51, char: "幺", vars: "-", strokes: 3, meaning: "Minúsculo" },
+            { id: 52, char: "广", vars: "-", strokes: 3, meaning: "Amplo / Abrigo (guǎng)" },
+            { id: 53, char: "廴", vars: "-", strokes: 3, meaning: "Longa caminhada" },
+            { id: 54, char: "廾", vars: "-", strokes: 3, meaning: "Duas mãos juntas" },
+            { id: 55, char: "弋", vars: "-", strokes: 3, meaning: "Flecha com corda" },
+            { id: 56, char: "弓", vars: "-", strokes: 3, meaning: "Arco (gōng)" },
+            { id: 57, char: "彐", vars: "彑, ⺕", strokes: 3, meaning: "Focinho de porco" },
+            { id: 58, char: "彡", vars: "-", strokes: 3, meaning: "Cerdas / Penas / Barba" },
+            { id: 59, char: "彳", vars: "-", strokes: 3, meaning: "Passo (Passo com o pé esquerdo)" },
+            { id: 60, char: "巛", vars: "川", strokes: 3, meaning: "Rio que flui" },
+            // 4 Traços
+            { id: 61, char: "心", vars: "忄, ⺗", strokes: 4, meaning: "Coração / Mente (xīn)" },
+            { id: 62, char: "戈", vars: "-", strokes: 4, meaning: "Alabarda / Lança antiga" },
+            { id: 63, char: "户", vars: "-", strokes: 4, meaning: "Porta / Família (hù)" },
+            { id: 64, char: "手", vars: "扌", strokes: 4, meaning: "Mão (shǒu)" },
+            { id: 65, char: "支", vars: "-", strokes: 4, meaning: "Ramo / Apoio (zhī)" },
+            { id: 66, char: "攴", vars: "攵", strokes: 4, meaning: "Bater levemente" },
+            { id: 67, char: "文", vars: "-", strokes: 4, meaning: "Texto / Culture (wén)" },
+            { id: 68, char: "斗", vars: "-", strokes: 4, meaning: "Concha / Luta (dǒu)" },
+            { id: 69, char: "斤", vars: "-", strokes: 4, meaning: "Machado (jīn)" },
+            { id: 70, char: "方", vars: "-", strokes: 4, meaning: "Quadrado / Direção (fāng)" },
+            { id: 71, char: "无", vars: "-", strokes: 4, meaning: "Não ter / Nada (wú)" },
+            { id: 72, char: "日", vars: "-", strokes: 4, meaning: "Sol / Dia (rì)" },
+            { id: 73, char: "曰", vars: "-", strokes: 4, meaning: "Dizer / Falar (yuē)" },
+            { id: 74, char: "月", vars: "-", strokes: 4, meaning: "Lua / Mês (yuè)" },
+            { id: 75, char: "木", vars: "-", strokes: 4, meaning: "Árvore / Madeira (mù)" },
+            { id: 76, char: "欠", vars: "-", strokes: 4, meaning: "Bocejo / Faltar (qiàn)" },
+            { id: 77, char: "止", vars: "-", strokes: 4, meaning: "Parar (zhǐ)" },
+            { id: 78, char: "歹", vars: "歺", strokes: 4, meaning: "Mau / Morte (dǎi)" },
+            { id: 79, char: "殳", vars: "-", strokes: 4, meaning: "Lança / Arma de arremesso" },
+            { id: 80, char: "毋", vars: "母", strokes: 4, meaning: "Não / Mãe (wú)" },
+            { id: 81, char: "比", vars: "-", strokes: 4, meaning: "Comparar (bǐ)" },
+            { id: 82, char: "毛", vars: "-", strokes: 4, meaning: "Pêlo / Cabelo (máo)" },
+            { id: 83, char: "氏", vars: "-", strokes: 4, meaning: "Clã (shì)" },
+            { id: 84, char: "气", vars: "-", strokes: 4, meaning: "Ar / Vapor (qì)" },
+            { id: 85, char: "水", vars: "Align", strokes: 4, meaning: "Água (shuǐ)" },
+            { id: 86, char: "火", vars: "灬", strokes: 4, meaning: "Fogo (huǒ)" },
+            { id: 87, char: "爪", vars: "爫", strokes: 4, meaning: "Garra (zhǎo)" },
+            { id: 88, char: "父", vars: "-", strokes: 4, meaning: "Pai (fù)" },
+            { id: 89, char: "爻", vars: "-", strokes: 4, meaning: "Diagramas (I Ching)" },
+            { id: 90, char: "爿", vars: "丬", strokes: 4, meaning: "Tábua (lado esquerdo)" },
+            { id: 91, char: "片", vars: "-", strokes: 4, meaning: "Fatia / Pedaço plano (piàn)" },
+            { id: 92, char: "牙", vars: "-", strokes: 4, meaning: "Dente / Presa (yá)" },
+            { id: 93, char: "牛", vars: "牜", strokes: 4, meaning: "Vaca / Boi (niú)" },
+            { id: 94, char: "犬", vars: "犭", strokes: 4, meaning: "Cão / Cachorro (quǎn)" },
+            // 5 Traços
+            { id: 95, char: "玄", vars: "-", strokes: 5, meaning: "Profundo / Misterioso (xuán)" },
+            { id: 96, char: "玉", vars: "王", strokes: 5, meaning: "Jade / Rei (yù)" },
+            { id: 97, char: "瓜", vars: "-", strokes: 5, meaning: "Melão (guā)" },
+            { id: 98, char: "瓦", vars: "-", strokes: 5, meaning: "Telha (wǎ)" },
+            { id: 99, char: "甘", vars: "-", strokes: 5, meaning: "Doce (gān)" },
+            { id: 100, char: "生", vars: "-", strokes: 5, meaning: "Nascer / Vida (shēng)" },
+            { id: 101, char: "用", vars: "甩", strokes: 5, meaning: "Usar (yòng)" },
+            { id: 102, char: "田", vars: "-", strokes: 5, meaning: "Campo de cultivo (tián)" },
+            { id: 103, char: "疋", vars: "⺪", strokes: 5, meaning: "Rolo de pano / Perna" },
+            { id: 104, char: "疒", vars: "-", strokes: 5, meaning: "Doença" },
+            { id: 105, char: "癶", vars: "-", strokes: 5, meaning: "Passos / Tenda" },
+            { id: 106, char: "白", vars: "-", strokes: 5, meaning: "Branco (bái)" },
+            { id: 107, char: "皮", vars: "-", strokes: 5, meaning: "Pele / Couro (pí)" },
+            { id: 108, char: "皿", vars: "-", strokes: 5, meaning: "Prato / Recipiente (mǐn)" },
+            { id: 109, char: "目", vars: "-", strokes: 5, meaning: "Olho (mù)" },
+            { id: 110, char: "矛", vars: "-", strokes: 5, meaning: "Lança (máo)" },
+            { id: 111, char: "矢", vars: "-", strokes: 5, meaning: "Flecha (shǐ)" },
+            { id: 112, char: "石", vars: "-", strokes: 5, meaning: "Pedra (shí)" },
+            { id: 113, char: "示", vars: "礻", strokes: 5, meaning: "Mostrar / Sinal espiritual (shì)" },
+            { id: 114, char: "禸", vars: "-", strokes: 5, meaning: "Pegada de animal" },
+            { id: 115, char: "禾", vars: "-", strokes: 5, meaning: "Grão / Planta de cereal (hé)" },
+            { id: 116, char: "穴", vars: "-", strokes: 5, meaning: "Caverna / Buraco (xué)" },
+            { id: 117, char: "立", vars: "-", strokes: 5, meaning: "Ficar em pé / Estabelecer (lì)" },
+            // 6 Traços
+            { id: 118, char: "竹", vars: "⺮", strokes: 6, meaning: "Bambu (zhú)" },
+            { id: 119, char: "米", vars: "-", strokes: 6, meaning: "Arroz (mǐn)" },
+            { id: 120, char: "纟", vars: "-", strokes: 6, meaning: "Seda / Fio (mì)", trad: "糸" },
+            { id: 121, char: "缶", vars: "-", strokes: 6, meaning: "Pote de barro (fǒu)" },
+            { id: 122, char: "网", vars: "罒, ⺲, ⺳", strokes: 6, meaning: "Rede (wǎng)" },
+            { id: 123, char: "羊", vars: "⺷, ⺶", strokes: 6, meaning: "Ovelha / Carneiro (yáng)" },
+            { id: 124, char: "羽", vars: "-", strokes: 6, meaning: "Pena / Asa (yǔ)" },
+            { id: 125, char: "老", vars: "耂", strokes: 6, meaning: "Velho (lǎo)" },
+            { id: 126, char: "而", vars: "-", strokes: 6, meaning: "E / No entanto (ér)" },
+            { id: 127, char: "耒", vars: "-", strokes: 6, meaning: "Arado" },
+            { id: 128, char: "耳", vars: "-", strokes: 6, meaning: "Orelha (ěr)" },
+            { id: 129, char: "聿", vars: "⺻", strokes: 6, meaning: "Pincel de escrita" },
+            { id: 130, char: "肉", vars: "月", strokes: 6, meaning: "Carne (ròu)" },
+            { id: 131, char: "臣", vars: "-", strokes: 6, meaning: "Ministro / Súdito (chén)" },
+            { id: 132, char: "自", vars: "-", strokes: 6, meaning: "Próprio / Desde (zì)" },
+            { id: 133, char: "至", vars: "-", strokes: 6, meaning: "Chegar (zhì)" },
+            { id: 134, char: "臼", vars: "-", strokes: 6, meaning: "Almofariz (jiù)" },
+            { id: 135, char: "舌", vars: "-", strokes: 6, meaning: "Língua (shé)" },
+            { id: 136, char: "舛", vars: "-", strokes: 6, meaning: "Oposição / Erro" },
+            { id: 137, char: "舟", vars: "-", strokes: 6, meaning: "Barco (zhōu)" },
+            { id: 138, char: "艮", vars: "-", strokes: 6, meaning: "Parar / Duro (gèn)" },
+            { id: 139, char: "色", vars: "-", strokes: 6, meaning: "Cor (sè)" },
+            { id: 140, char: "艹", vars: "++", strokes: 6, meaning: "Grama / Erva" },
+            { id: 141, char: "虍", vars: "-", strokes: 6, meaning: "Tigre" },
+            { id: 142, char: "虫", vars: "-", strokes: 6, meaning: "Inseto / Verme (chóng) [Tradicional: 蟲]" },
+            { id: 143, char: "血", vars: "-", strokes: 6, meaning: "Sangue (xuè)" },
+            { id: 144, char: "行", vars: "-", strokes: 6, meaning: "Caminhar / Ir (xíng)" },
+            { id: 145, char: "衣", vars: "衣, 义", strokes: 6, meaning: "Roupa / Vestimenta (yī)" },
+            { id: 146, char: "西", vars: "覀", strokes: 6, meaning: "Oeste (xī)" },
+            // 7 Traços
+            { id: 147, char: "见", vars: "-", strokes: 7, meaning: "Ver / Encontrar (jiàn)", trad: "見" },
+            { id: 148, char: "角", vars: "-", strokes: 7, meaning: "Chifre / Ângulo (jiǎo)" },
+            { id: 149, char: "言", vars: "讠", strokes: 7, meaning: "Fala / Palavra (yán)", trad: "言 / 訁" },
+            { id: 150, char: "谷", vars: "-", strokes: 7, meaning: "Vale (gǔ)" },
+            { id: 151, char: "豆", vars: "-", strokes: 7, meaning: "Feijão (dòu)" },
+            { id: 152, char: "豕", vars: "-", strokes: 7, meaning: "Porco" },
+            { id: 153, char: "豸", vars: "-", strokes: 7, meaning: "Felino lendário" },
+            { id: 154, char: "贝", vars: "-", strokes: 7, meaning: "Concha / Moeda (bèi)", trad: "貝" },
+            { id: 155, char: "赤", vars: "-", strokes: 7, meaning: "Vermelho (chì)" },
+            { id: 156, char: "走", vars: "-", strokes: 7, meaning: "Andar / Correr (zǒu)" },
+            { id: 157, char: "足", vars: "⻊", strokes: 7, meaning: "Pé / Suficiente (zú)" },
+            { id: 158, char: "身", vars: "-", strokes: 7, meaning: "Corpo (shēn)" },
+            { id: 159, char: "车", vars: "-", strokes: 7, meaning: "Carro / Veículo (chē)", trad: "車" },
+            { id: 160, char: "辛", vars: "-", strokes: 7, meaning: "Picante / Labuta (xīn)" },
+            { id: 161, char: "辰", vars: "-", strokes: 7, meaning: "Manhã / Estrela (chén)" },
+            { id: 162, char: "辵", vars: "辶", strokes: 7, meaning: "Caminhar / Parar e andar" },
+            { id: 163, char: "邑", vars: "阝 (direita)", strokes: 7, meaning: "Cidade / Vila" },
+            { id: 164, char: "酉", vars: "-", strokes: 7, meaning: "Vinho / Jarro (yǒu)" },
+            { id: 165, char: "采", vars: "-", strokes: 7, meaning: "Colher / Coletar (cǎi)" },
+            { id: 166, char: "里", vars: "-", strokes: 7, meaning: "Vila / Li (distância) (lǐ)" },
+            // 8 Traços
+            { id: 167, char: "金", vars: "金, 钅", strokes: 8, meaning: "Ouro / Metal (jīn)", trad: "金 / 釒" },
+            { id: 168, char: "长", vars: "-", strokes: 8, meaning: "Longo (cháng)", trad: "長" },
+            { id: 169, char: "门", vars: "-", strokes: 8, meaning: "Porta / Portal (mén)", trad: "門" },
+            { id: 170, char: "阜", vars: "阝 (esquerda)", strokes: 8, meaning: "Monte / Colina" },
+            { id: 171, char: "隶", vars: "-", strokes: 8, meaning: "Escravo / Servo" },
+            { id: 172, char: "隹", vars: "-", strokes: 8, meaning: "Pássaro de cauda curta (zhuī)" },
+            { id: 173, char: "雨", vars: "⻗", strokes: 8, meaning: "Chuva (yǔ)" },
+            { id: 174, char: "青", vars: "-", strokes: 8, meaning: "Azul-esverdeado / Jovem (qīng)" },
+            { id: 175, char: "非", vars: "-", strokes: 8, meaning: "Não / Errado (fēi)" },
+            // 9 Traços
+            { id: 176, char: "面", vars: "-", strokes: 9, meaning: "Rosto / Superfície (miàn)" },
+            { id: 177, char: "革", vars: "-", strokes: 9, meaning: "Couro / Reforma (gé)" },
+            { id: 178, char: "韦", vars: "-", strokes: 9, meaning: "Couro macio", trad: "韋" },
+            { id: 179, char: "韭", vars: "-", strokes: 9, meaning: "Nirá / Cebolinha (jiǔ)" },
+            { id: 180, char: "音", vars: "-", strokes: 9, meaning: "Som / Voz (yīn)" },
+            { id: 181, char: "页", vars: "-", strokes: 9, meaning: "Página / Folha (yè)", trad: "頁" },
+            { id: 182, char: "风", vars: "-", strokes: 9, meaning: "Vento (fēng)", trad: "風" },
+            { id: 183, char: "飞", vars: "-", strokes: 9, meaning: "Voar (fēi)", trad: "飛" },
+            { id: 184, char: "食", vars: "饣", strokes: 9, meaning: "Comer / Comida (shí)", trad: "食 / 飠" },
+            { id: 185, char: "首", vars: "-", strokes: 9, meaning: "Cabeça / Líder (shǒu)" },
+            { id: 186, char: "香", vars: "-", strokes: 9, meaning: "Aromático (xiāng)" },
+            // 10 Traços
+            { id: 187, char: "马", vars: "-", strokes: 10, meaning: "Cavalo (mǎ)", trad: "馬" },
+            { id: 188, char: "骨", vars: "-", strokes: 10, meaning: "Osso" },
+            { id: 189, char: "高", vars: "-", strokes: 10, meaning: "Alto (gāo)" },
+            { id: 190, char: "髟", vars: "-", strokes: 10, meaning: "Cabelo comprido" },
+            { id: 191, char: "斗", vars: "-", strokes: 10, meaning: "Luta / Disputa" },
+            { id: 192, char: "鬯", vars: "-", strokes: 10, meaning: "Vinho sacrificial" },
+            { id: 193, char: "鬲", vars: "-", strokes: 10, meaning: "Tripé de cozinha antigo" },
+            { id: 194, char: "鬼", vars: "-", strokes: 10, meaning: "Fantasma / Demônio (guǐ)" },
+            // 11 Traços
+            { id: 195, char: "鱼", vars: "-", strokes: 11, meaning: "Peixe (yú)", trad: "魚" },
+            { id: 196, char: "鸟", vars: "-", strokes: 11, meaning: "Pássaro / Ave (niǎo)", trad: "鳥" },
+            { id: 197, char: "卤", vars: "-", strokes: 11, meaning: "Sal / Salmoura (lǔ)", trad: "鹵" },
+            { id: 198, char: "鹿", vars: "-", strokes: 11, meaning: "Cervo (lù)" },
+            { id: 199, char: "麦", vars: "-", strokes: 11, meaning: "Trigo / Cevada (mài)", trad: "麥" },
+            { id: 200, char: "麻", vars: "-", strokes: 11, meaning: "Cânhamo (má)" },
+            // 12 Traços
+            { id: 201, char: "黄", vars: "-", strokes: 12, meaning: "Amarelo (huáng)" },
+            { id: 202, char: "黍", vars: "-", strokes: 12, meaning: "Painço (shǔ)" },
+            { id: 203, char: "黑", vars: "-", strokes: 12, meaning: "Preto / Negro (hēi)" },
+            { id: 204, char: "黹", vars: "-", strokes: 12, meaning: "Bordado" },
+            // 13 Traços
+            { id: 205, char: "黾", vars: "-", strokes: 13, meaning: "Sapo / Anfíbio", trad: "黽" },
+            { id: 206, char: "鼎", vars: "-", strokes: 13, meaning: "Tripé ritual (dǐng)" },
+            { id: 207, char: "鼓", vars: "-", strokes: 13, meaning: "Tambor (gǔ)" },
+            { id: 208, char: "鼠", vars: "-", strokes: 13, meaning: "Rato (shǔ)" },
+            // 14 Traços
+            { id: 209, char: "鼻", vars: "-", strokes: 14, meaning: "Nariz (bí)" },
+            { id: 210, char: "齐", vars: "-", strokes: 14, meaning: "Uniforme / Alinhado (qí)", trad: "齊" },
+            // 15 Traços
+            { id: 211, char: "齿", vars: "-", strokes: 15, meaning: "Dente (chǐ)", trad: "齒" },
+            // 16 Traços
+            { id: 212, char: "龙", vars: "-", strokes: 16, meaning: "Dragão (lóng)", trad: "龍" },
+            { id: 213, char: "龟", vars: "-", strokes: 16, meaning: "Tartaruga (guī)", trad: "龜" },
+            // 17 Traços
+            { id: 214, char: "龠", vars: "-", strokes: 17, meaning: "Flauta antiga" }
+        ];
+
+        const container = document.getElementById("dynamic-blocks-container");
+        const searchInput = document.getElementById("search-input");
+        const emptyMessage = document.getElementById("empty-message");
+
+        // localStorage Tracker de Status
+        const storageKey = "radicals_status_tracker";
+        let statusCache = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+        // Configuração Tema Escuro / Claro
+        function initTheme() {
+            const savedTheme = localStorage.getItem("theme") || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+            updateThemeButtonUI(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            const newTheme = currentTheme === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme);
+            updateThemeButtonUI(newTheme);
+        }
+
+        function updateThemeButtonUI(theme) {
+            const icon = document.getElementById("theme-icon");
+            icon.textContent = theme === "dark" ? "☀️" : "🌙";
+        }
+
+        // Alternância Cíclica de Status Persistente
+        function toggleStatus(id, buttonElement, rowElement) {
+            const currentStatus = statusCache[id] || "nenhum";
+            let nextStatus = "nenhum";
+            let label = "Marcar";
+            
+            if (currentStatus === "nenhum") {
+                nextStatus = "estudo";
+                label = "Em estudo";
+            } else if (currentStatus === "estudo") {
+                nextStatus = "aprendido";
+                label = "Aprendido";
+            } else {
+                nextStatus = "nenhum";
+                label = "Marcar";
+            }
+
+            if (nextStatus === "nenhum") {
+                delete statusCache[id];
+            } else {
+                statusCache[id] = nextStatus;
+            }
+            localStorage.setItem(storageKey, JSON.stringify(statusCache));
+
+            buttonElement.className = "btn-status";
+            rowElement.className = "";
+
+            if (nextStatus !== "nenhum") {
+                buttonElement.classList.add(nextStatus);
+                rowElement.classList.add("status-" + nextStatus);
+            }
+            buttonElement.textContent = label;
+        }
+
+        // Renderização Dividida e Agrupada por Número de Traços
+        function renderGroupedTable(data) {
+            container.innerHTML = "";
+            
+            if(data.length === 0) {
+                emptyMessage.style.display = "block";
+                return;
+            }
+            emptyMessage.style.display = "none";
+
+            // Agrupa os radicais pelo valor da propriedade 'strokes'
+            const groups = {};
+            data.forEach(item => {
+                if (!groups[item.strokes]) {
+                    groups[item.strokes] = [];
+                }
+                groups[item.strokes].push(item);
+            });
+
+            // Itera sobre as chaves numéricas de traços de forma ordenada
+            Object.keys(groups).sort((a, b) => a - b).forEach(strokeNum => {
+                const groupItems = groups[strokeNum];
+
+                // Cria o Título Separador Visual do Bloco
+                const blockHeader = document.createElement("div");
+                blockHeader.className = "block-title";
+                blockHeader.innerHTML = `<span>Radicais com ${strokeNum} ${strokeNum == 1 ? 'Traço' : 'Traços'} (${groupItems.length})</span>`;
+                container.appendChild(blockHeader);
+
+                // Cria a estrutura do cartão e da tabela interna para esse bloco específico
+                const tableContainer = document.createElement("div");
+                tableContainer.className = "table-container";
+
+                const tableResponsive = document.createElement("div");
+                tableResponsive.className = "table-responsive";
+
+                const table = document.createElement("table");
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th class="col-num">Nº</th>
+                            <th class="col-char">Radical</th>
+                            <th class="col-vars">Variantes</th>
+                            <th class="col-meaning">Significado (PT-BR) / Notas</th>
+                            <th class="col-status">Status</th>
+                            <th class="col-gif">Animação</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                `;
+
+                const tbody = table.querySelector("tbody");
+
+                groupItems.forEach(item => {
+                    const tr = document.createElement("tr");
+                    const tradTag = item.trad ? `<br><span class="trad-highlight">[TRADICIONAL: ${item.trad}]</span>` : "";
+                    
+                    const charEncoded = encodeURIComponent(item.char);
+                    const definitiveGifUrl = `https://commons.wikimedia.org/wiki/Special:FilePath/${charEncoded}-order.gif`;
+
+                    const savedStatus = statusCache[item.id] || "nenhum";
+                    let btnClass = "btn-status";
+                    let btnLabel = "Marcar";
+
+                    if (savedStatus !== "nenhum") {
+                        tr.classList.add("status-" + savedStatus);
+                        btnClass += " " + savedStatus;
+                        btnLabel = savedStatus === "estudo" ? "Em estudo" : "Aprendido";
+                    }
+
+                    tr.innerHTML = `
+                        <td class="col-num">${item.id}</td>
+                        <td class="col-char">${item.char}</td>
+                        <td class="col-vars">${item.vars}</td>
+                        <td class="col-meaning">
+                            <strong>${item.meaning}</strong>
+                            ${tradTag}
+                        </td>
+                        <td class="col-status">
+                            <button class="${btnClass}" onclick="toggleStatus(${item.id}, this, this.parentElement.parentElement)">${btnLabel}</button>
+                        </td>
+                        <td class="col-gif">
+                            <div class="gif-wrapper">
+                                <img class="stroke-gif" src="${definitiveGifUrl}" alt="${item.char}" loading="lazy">
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                tableResponsive.appendChild(table);
+                tableContainer.appendChild(tableResponsive);
+                container.appendChild(tableContainer);
+            });
+        }
+
+        // Filtro .includes inteligente e reativo
+        searchInput.addEventListener("input", (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const filtered = radicals.filter(item => {
+                return item.id.toString().includes(term) || 
+                       item.char.includes(term) || 
+                       item.strokes.toString() === term ||
+                       item.vars.toLowerCase().includes(term) ||
+                       item.meaning.toLowerCase().includes(term) ||
+                       (item.trad && item.trad.toLowerCase().includes(term));
+            });
+            renderGroupedTable(filtered);
+        });
+
+        // Inicialização do App
+        initTheme();
+        renderGroupedTable(radicals);
+    </script>
+</body>
+</html>
