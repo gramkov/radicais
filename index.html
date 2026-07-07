@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Radicais Chineses (214 Kangxi) - Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <div class="top-bar">
+        <button class="btn-theme" id="cursor-toggle" onclick="toggleCursorGlow()">
+            <span id="cursorglow-icon">✔️</span> Ativar/Desativar Cursor
+        </button>
+        <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span> Modificar Tema
+        </button>
+    </div>
+
+    <header>
+        <h3>Tabela Interativa de</h3>
+        <h1>Radicais Chineses</h1>
+        <p>Uma nova experiência para o estudo dos 214 radicais chineses.</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search-input"
+            placeholder="Busque por número, caractere ou significado... (Ex.: '2', '水', 'fogo')">
+    </div>
+
+    <!-- Envoltório para alinhar os botões na esquerda e os contadores na direita -->
+    <div id="botoesebolinhas">
+
+        <!-- BOTÕES DE ACESSO RÁPIDO (1 a 17) -->
+        <div id="botoes-tracos" style="display: flex; gap: 6px;">
+            <!-- Gerados via JavaScript para economizar espaço no seu HTML -->
+        </div>
+
+        <!-- SEUS CONTADORES ATUAIS (Mantendo sua estrutura intacta) -->
+        <div class="container-contadores">
+            <div class="contador-item">
+                <span class="bolinha bolinha-branca"></span>
+                <span>Não aprendidos: <strong id="qtd-nao-aprendidos">0</strong></span>
+            </div>
+            <div class="contador-item">
+                <span class="bolinha bolinha-amarela"></span>
+                <span>Em estudo: <strong id="qtd-em-estudo">0</strong></span>
+            </div>
+            <div class="contador-item">
+                <span class="bolinha bolinha-verde"></span>
+                <span>Aprendidos: <strong id="qtd-aprendidos">0</strong></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="dynamic-blocks-container" style="width: 100%; max-width: 1200px;"></div>
+
+    <div id="empty-message">Nenhum radical corresponde aos critérios de pesquisa.</div>
+
+    <button id="btn-topo" title="Voltar ao topo" aria-label="Voltar ao topo">
+        <span>↑</span>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
